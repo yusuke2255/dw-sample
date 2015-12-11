@@ -1,0 +1,49 @@
+<!doctype html>
+<html ng-app="app">
+  <head>
+    <title>My Angular App</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-resource.min.js"></script>
+  </head>
+  <body  ng-controller="appCtrl">
+ TEST
+  </body>
+
+  <script type="text/javascript">
+'use strict';
+// get reference to app module
+
+var storage = localStorage;
+storage.setItem("token","token-111");
+
+var sampleServices = angular.module('sampleServices', ['ngResource']);
+sampleServices.factory('Sample', ['$resource',
+  function($resource) {
+    return $resource('/api/secret/resource', {}, {
+      get: {
+    	  method: 'GET', 
+    	  headers: {
+              'Authorization': 'Bearer ' + storage.getItem("token")
+          },
+    	  isArray: false}
+    });
+  }
+]);
+
+
+var app = angular.module('app',['sampleServices']);
+// add controller to app module
+app.controller('appCtrl',function appCtrl($scope, Sample) {
+  
+
+Sample.get({}, function(data) {
+   window.alert('OK');
+},function() {
+   window.alert('NG');
+});
+
+
+});
+  </script>
+
+</html>

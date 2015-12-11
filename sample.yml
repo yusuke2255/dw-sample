@@ -1,0 +1,36 @@
+viewRendererConfiguration:
+    .ftl:
+        strict_syntax: yes
+        whitespace_stripping: yes
+        template_loader: my.sample.template.SampleTemplateLoader
+server:
+  rootPath: /api/*
+  applicationContextPath: /
+  applicationConnectors:
+    - type: http 
+      port: 19000
+  adminConnectors:
+    - type: http
+      port: 19001
+  requestLog:
+    timeZone: JST
+    appenders:
+      - type: file
+        currentLogFilename: /Users/yusukekawata/tmp/logs/access-dw-sample.log
+        threshold: ALL
+        archive: true
+        archivedLogFilenamePattern: /Users/yusukekawata/tmp/logs/access-dw-sample.log.%d.gz
+        archivedFileCount: 31
+logging:
+  loggers:
+    "org.hibernate.engine.internal": WARN
+  level: INFO
+  appenders:
+    - type: file
+      currentLogFilename: /Users/yusukekawata/tmp/logs/dw-sample-app.log
+      threshold: ALL
+      archive: true
+      archivedLogFilenamePattern: /Users/yusukekawata/tmp/logs/dw-sample-app.log.%d.gz
+      archivedFileCount: 31
+      timeZone: JST
+#      logFormat: # TODO
